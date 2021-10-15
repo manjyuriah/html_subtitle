@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+</head>
+<body>
+    <div id="root">
+    <div class="input_box" >
+        <input type="text" placeholder="자막1" v-model="cc1">
+        <input type="text" placeholder="자막2" v-model="cc2">
+        <input type="text" placeholder="자막3" v-model="cc3">
+        </div>
+    <video controls style="width: 600px; height:400px;">
+        <source src="./jaerong.mp4" type="video/mp4">
+        <track id="caption-track" kind="subtitles" srclang="ko" label="Korean" default />
+    </video>
+    <input type="button" value="적용" class="btn" v-on:click="input_cc">
+    <a id="save" href="" download="download.vtt">download copy</a>
+    </div>
+
+<script>
+        var app=new Vue({
+            el:"#root",
+            data:{
+                cc1:"",
+                cc2:"",
+                cc3:""
+            },
+            methods:{
+                input_cc(){
+                var dynamicSubtitle=`WEBVTT`
+                var data=[
+                    {
+                        from:"00:00.000",
+                        to:"00:03.000",
+                        text:"<v Roger Bingham>"+this.cc1
+                    },
+                    {
+                        from:"00:03.000",
+                        to:"00:05.000",
+                        text:"<v Roger Bingham>"+this.cc2
+                    },
+                    {
+                        from:"00:05.000",
+                        to:"00:10.000",
+                        text:"<v Roger Bingham>"+this.cc3
+                    }
+                ]
+                data.map((item)=>{
+                    dynamicSubtitle=dynamicSubtitle+`\n ${item.from} --> ${item.to} \n ${item.text} \n`
+                })
+
+            const trackBlob=new Blob ([dynamicSubtitle],{
+            type:"text/plain;charset=utf=8"
+        });
+        const trackUrl=URL.createObjectURL(trackBlob);
+        document.querySelector("#caption-track").src=trackUrl;
+
+        //vtt로 자막 파일 다운받기
+        document.querySelector("#save").href=trackUrl;
+                }
+            }
+        });
+</script>
+</body>
+</html>
