@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <link rel="stylesheet" href="./index.css" type="text/css">
+    <link rel="stylesheet" href="./select_time.css" type="text/css">
 </head>
 <body>
     <div id="root">
@@ -19,18 +19,12 @@
             <li class="task-list-item" v-for="task in tasks">
               <label class="task-list-item-label">
                 <span class="cc_name">{{task.name}}</span>
-                <!--range bar-->
-                <div class="wrapper">
-                    <div class="container">
-                        <div class="slider-track"></div>
-                        <input type="range" min="0" max="60" value="0" r id="slider-1" oninput="slideOne()">
-                        <input type="range" min="0" max="60" value="3" id="slider-2" oninput="slideTwo()">
-                    </div>
-                    <div class="values">
-                        <span id="range1">0</span>
-                        <span id="range2">3</span>
-                    </div>
-                </div>
+                <span class="time">
+                    <div>from : </div>
+                    <input type="text" placeholder="00:00" style="width:55px;" id="start">
+                    <div> to : </div>
+                    <input type="text" placeholder="00:00" style="width:55px;" id="end">
+                </span>
               </label>
               <span @click="delItem(task)" class="delete-btn" title="Delete Task">{{task.del}}</span>
             </li>
@@ -44,15 +38,26 @@
     <a id="save" href="" download="download.vtt">download copy</a>
 
     </div>
-
 <script>
+     window.addEventListener("load", function(){
+         var start = document.getElementById("start");
+         var end = document.getElementById("end");
+         end.addEventListener("keyup", function(evt){
+             var end_n=end.value;
+             console.log(end_n)
+         });
+         start.addEventListener("keyup", function(evt){
+             var start_n=start.value;
+             console.log(start_n)
+         });
+
+     });
         var app=new Vue({
             el:"#root",
             data:{
                 tasks: [
                 { name: '* 샘플입니다. 삭제해주세요 *' },
-                ],
-                count:0
+                ]
             },
             methods:{
                 new_cc: function() {
@@ -63,7 +68,6 @@
                         name: this.tasks.name,
                         del: ''
                     });
-                    console.log(this.tasks[this.count++].name);
                     var data=[
                         {
                             from:"00:00.000",
@@ -72,12 +76,12 @@
                         },
                         {
                             from:"00:03.000",
-                            to:"00:05.000",
+                            to:"00:06.000",
                             text:"<v Roger Bingham>"+this.tasks[1].name
                         },
                         {
-                            from:"00:05.000",
-                            to:"00:10.000",
+                            from:"00:06.000",
+                            to:"00:010.000",
                             text:"<v Roger Bingham>"+this.tasks[2].name
                         }
                     ]
@@ -100,14 +104,9 @@
                 },
                 delItem: function (task) {
                     this.tasks.splice(this.tasks.indexOf(task), 1)
-                },
-                input_cc(){
-
                 }
-
             }
         });
 </script>
-<script src="script.js"></script>
 </body>
 </html>
