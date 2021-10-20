@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>only vue</title>
+    <title>only vue TEST</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="./select_time.css" type="text/css">
 </head>
@@ -37,7 +37,7 @@
               <span @click="delItem(task)" class="delete-btn" title="Delete Task">{{task.del}}</span>
             </li>
           </ul>
-          <input type="button" value="적용" @click="push" class="input_cc">
+          <input type="button" value="적용" @click="push" class="input_cc" style="display: none;">
     </div>
 
     <video controls style="width: 700px; height:400px;">
@@ -58,36 +58,37 @@
             },
             methods:{
                 push(){
-                    this.count++
-                        console.log(this.tasks)
+                    // this.count++
+                    // console.log(this.tasks)
                         
-                    var data=[
-                        {
-                            from:this.tasks[0].start+".000",
-                            to:this.tasks[0].end+".000",
-                            text:"<v Roger Bingham>"+this.tasks[0].name
-                        }
-                    ]
+                    // var data=[
+                    //     {
+                    //         from:this.tasks.start+".000",
+                    //         to:this.tasks.end+".000",
+                    //         text:"<v Roger Bingham>"+this.tasks.name
+                    //     }
+                    // ]
                     
-                    this.tasks.name = "";
-                    var dynamicSubtitle=`WEBVTT`
+                    // this.tasks.name = "";
+                    // var dynamicSubtitle=`WEBVTT`
                     
-                    data.map((item)=>{
-                        dynamicSubtitle=dynamicSubtitle+`\n ${item.from} --> ${item.to} \n ${item.text} \n`
-                    })
+                    // data.map((item)=>{
+                    //     dynamicSubtitle=dynamicSubtitle+`\n ${item.from} --> ${item.to} \n ${item.text} \n`
+                    // })
 
-                    const trackBlob=new Blob ([dynamicSubtitle],{
-                    type:"text/plain;charset=utf=8"
-                    });
+                    // const trackBlob=new Blob ([dynamicSubtitle],{
+                    // type:"text/plain;charset=utf=8"
+                    // });
 
-                    const trackUrl=URL.createObjectURL(trackBlob);
-                    document.querySelector("#caption-track").src=trackUrl;
+                    // const trackUrl=URL.createObjectURL(trackBlob);
+                    // document.querySelector("#caption-track").src=trackUrl;
                     
                 },
                 new_cc: function() {
-                    if (!this.tasks.name && !this.tasks.start && !this.tasks.end) {
-                        return
-                    }
+                    
+                     if (!this.tasks.name && !this.tasks.start && !this.tasks.end) {
+                         return
+                     }
 
                     this.tasks.push ( {
                         name: this.tasks.name,
@@ -100,6 +101,29 @@
                     this.tasks.start = "";
                     this.tasks.end = "";
 
+                    // var data=[
+                    //     {
+                    //         from:this.tasks[0].start+".000",
+                    //         to:this.tasks[0].end+".000",
+                    //         text:"<v Roger Bingham>"+this.tasks[0].name
+                    //     }
+                    // ]
+                    var data=this.tasks
+                    var dynamicSubtitle=`WEBVTT`
+                    
+                    data.map((item)=>{
+                        console.log(item.name,item.start,item.end)
+                        dynamicSubtitle=dynamicSubtitle+`\n ${item.start+".000"} --> ${item.end+".000"} \n ${"<v Roger Bingham>" +item.name} \n`
+                    })
+
+                    //vtt파일로 다운
+                    const trackBlob=new Blob ([dynamicSubtitle],{
+                    type:"text/plain;charset=utf=8"
+                    });
+
+                    const trackUrl=URL.createObjectURL(trackBlob);
+                    document.querySelector("#caption-track").src=trackUrl;
+                    
                 },
                 //자막 삭제
                 delItem: function (task) {

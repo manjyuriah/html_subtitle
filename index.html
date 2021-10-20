@@ -21,21 +21,16 @@
                 <span class="cc_name">{{task.name}}</span>
                 <!--range bar-->
                 <div class="wrapper">
-                    <div class="container">
-                        <div class="slider-track"></div>
-                        <input type="range" min="0" max="60" value="0" r id="slider-1" oninput="slideOne()">
-                        <input type="range" min="0" max="60" value="3" id="slider-2" oninput="slideTwo()">
-                    </div>
-                    <div class="values">
-                        <span id="range1">0</span>
-                        <span id="range2">3</span>
-                    </div>
+                    <div>from : </div>
+                    <input type="text" placeholder="00:00" v-model=task.start style="width:55px;" id="start">
+                    <div> to : </div>
+                    <input type="text" placeholder="00:00" v-model=task.end style="width:55px;" id="end" >
                 </div>
               </label>
               <span @click="delItem(task)" class="delete-btn" title="Delete Task">{{task.del}}</span>
             </li>
           </ul>
-        <!-- <input type="button" value="자막 적용" class="input_cc" @click="input_cc"> -->
+        <input type="button" value="적용" class="input_cc" onclick="inputs()">
     </div>
     <video controls style="width: 700px; height:400px;">
         <source src="./jaerong.mp4" type="video/mp4">
@@ -51,8 +46,7 @@
             data:{
                 tasks: [
                 { name: '* 샘플입니다. 삭제해주세요 *' },
-                ],
-                count:0
+                ]
             },
             methods:{
                 new_cc: function() {
@@ -63,7 +57,6 @@
                         name: this.tasks.name,
                         del: ''
                     });
-                    console.log(this.tasks[this.count++].name);
                     var data=[
                         {
                             from:"00:00.000",
@@ -81,7 +74,6 @@
                             text:"<v Roger Bingham>"+this.tasks[2].name
                         }
                     ]
-        
                     this.tasks.name = "";
                     var dynamicSubtitle=`WEBVTT`
                     
@@ -95,19 +87,17 @@
 
                     const trackUrl=URL.createObjectURL(trackBlob);
                     document.querySelector("#caption-track").src=trackUrl;
+
                     //vtt로 자막 파일 다운받기
                     document.querySelector("#save").href=trackUrl;
                 },
                 delItem: function (task) {
                     this.tasks.splice(this.tasks.indexOf(task), 1)
-                },
-                input_cc(){
-
                 }
 
             }
         });
+        
 </script>
-<script src="script.js"></script>
 </body>
 </html>

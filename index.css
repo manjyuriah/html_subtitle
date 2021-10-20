@@ -92,7 +92,7 @@ ul {
 }
 
 .cc_name {
-  width: 450px;
+  width: 420px;
 }
 
 .task-list-item {
@@ -132,8 +132,11 @@ ul {
 
 .wrapper {
   position: relative;
-  width: 120px;
-  left: 5%;
+  width: 180px;
+  left: 2%;
+}
+.wrapper > div {
+  display: inline-block;
 }
 
 .container {
