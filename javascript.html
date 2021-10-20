@@ -10,8 +10,8 @@
 </head>
 <body>
     <div id="root">
-    <div class="input_box" id="input_box">
-        <div class="add-task">
+    <div class="input_box" id="input_box" >
+        <div class="add-task" >
         <input type="text" autocomplete="off" placeholder="자막 추가" maxlength="30" v-model="tasks.name" @keyup.enter="new_cc" class="cc_input">
         <!--자막 및 시간 추가 부분-->
         <span class="time top" style="color: #fff;">
@@ -39,14 +39,12 @@
             </li>
           </ul>
     </div>
-
-    <video controls style="width: 700px; height:400px;">
-        <source src="./jaerong.mp4" type="video/mp4">
+    <video id="video" controls style="width: 700px; height:400px;">
+        <source type="video/mp4" >
         <track id="caption-track" kind="subtitles" srclang="ko" label="Korean" default />
     </video>
-    <div class="save">
-    <a id="save" href="" download="download.vtt">Download Copy</a>
-    </div>
+    <a id="save" href="" download="download.vtt">download copy</a>
+    <input type="file" name="file" id="file" accept="video/mp4,video/mkv, video/x-m4v,video/*" @change="uploadVideo">
 
     </div>
 <script>
@@ -58,6 +56,15 @@
                 ]
             },
             methods:{
+                // 비디오 업로드
+                uploadVideo: function(){
+                    const inputFile = document.getElementById("file");
+                    const video = document.getElementById("video");
+                    const file = inputFile.files[0];
+                    const videourl = URL.createObjectURL(file);
+                    video.setAttribute("src", videourl);
+                    video.play();
+                },
                 new_cc: function() { 
                     //자막 시간 숫자 확인
                     let start1=document.getElementById("start1").value;

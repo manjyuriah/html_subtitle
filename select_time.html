@@ -4,109 +4,162 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>only vue</title>
+    <title>TEST</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="./select_time.css" type="text/css">
 </head>
 <body>
     <div id="root">
-    <div class="input_box" id="input_box">
-        <div class="add-task">
+    <div class="input_box" id="input_box" >
+        <div class="add-task" >
         <input type="text" autocomplete="off" placeholder="자막 추가" maxlength="30" v-model="tasks.name" @keyup.enter="new_cc" class="cc_input">
-
+        <!--자막 및 시간 추가 부분-->
         <span class="time top" style="color: #fff;">
-            <div>from : </div>
-            <input type="text" placeholder="00:00" style="width:55px;" id="start" maxlength="5" v-model="tasks.start" @keyup.enter="new_cc">
-            <div> to : </div>
-            <input type="text" placeholder="00:00" style="width:55px;" id="end" maxlength="5" v-model="tasks.end" @keyup.enter="new_cc">
+            <input type="text" placeholder="00:00" style="width:23px;" maxlength="2" v-model="tasks.start1" @keyup.enter="new_cc" id="start1"> 분
+            <input type="text" placeholder="00:00" style="width:23px;" maxlength="2" v-model="tasks.start2" @keyup.enter="new_cc" id="start2"> 초
+            <div> - </div>
+            <input type="text" placeholder="00:00" style="width:23px;" maxlength="2" v-model="tasks.end1" @keyup.enter="new_cc" id="end1"> 분
+            <input type="text" placeholder="00:00" style="width:23px;" maxlength="2" v-model="tasks.end2" @keyup.enter="new_cc" id="end2"> 초
         </span>
-        
+        <!-- + 버튼-->
         <input type="submit" value="" class="submit_cc" @click="new_cc" title="Add cc">
         </div>
+        <!--추가된 내용-->
         <ul class="task-list">
             <li class="task-list-item" v-for="task in tasks">
               <label class="task-list-item-label">
                 <span class="cc_name">{{task.name}}</span>
                 <span class="time">
-                    <div>from : </div>
-                    <div class="s_time">{{task.start}}</div>
-                    <div> to : </div>
-                    <div class="e_time">{{task.end}}</div>
+                    <div class="s_time">{{task.start1}}:{{task.start2}}</div>
+                    <div> - </div>
+                    <div class="e_time">{{task.end1}}:{{task.end2}}</div>
                 </span>
               </label>
               <span @click="delItem(task)" class="delete-btn" title="Delete Task">{{task.del}}</span>
             </li>
           </ul>
-          <input type="button" value="적용" @click="push" class="input_cc">
     </div>
-
-    <video controls style="width: 700px; height:400px;">
-        <source src="./jaerong.mp4" type="video/mp4">
-        <track id="caption-track" kind="subtitles" srclang="ko" label="Korean" default />
+    <video controls style="width: 700px; height:400px;" id="video">
+        <source  type="video/mp4">
+        <track id="caption-track" kind="subtitles" srclang="ko" label="Korean" default /> 
     </video>
-    <a id="save" href="" download="download.vtt">download copy</a>
+    <button class="btn btn-info" @click="onPickFile">Upload profile picture</button>
+    <input  type="file"  style="display: none"  ref="fileInput"  accept="image/*"  @change="onFilePicked"/>
+    <div class="save">
+    <a id="save" href="" download="download.vtt">Download Copy</a>
+    </div>
 
     </div>
 <script>
+    //비디오 업로드 및 출력
+    // function selectedVideo (self){
+    //     var file=self.files[0];
+    //     var reader=new FileReader();
+    //     reader.onload=function(e){
+    //       var src=e.target.result;
+    //       var video=document.getElementById("video");
+    //       video.setAttribute("video",src);
+    //       video.load();
+    //       video.play();
+    //     };
+    //     reader.readAsDataURL(file);
+    // }
+
+    // let imgElement = document.getElementById('video');
+    // let inputElement = document.getElementById('fileInput');
+
+    // inputElement.addEventListener('change', (e) => {
+    //     imgElement.src = URL.createObjectURL(e.target.files[0]);
+    // }, false);
+
+    // imgElement.onload = function () {
+    //     let mat = cv.imread(imgElement);
+    //     let gray = new cv.Mat();
+    //     cv.cvtColor(mat, gray, cv.COLOR_RGB2GRAY, 0);
+    //     cv.imshow('canvasOutput', gray);
+    //     mat.delete();
+    // };
+
         var app=new Vue({
             el:"#root",
             data:{
                 tasks: [
-                { name: '* 샘플입니다. 삭제해주세요 *', start:"00:00" , end:"00:00" }
-                ],
-                count:0
+                
+                ]
             },
             methods:{
-                push(){
-                    this.count++
-                        console.log(this.tasks)
-                        
-                    var data=[
-                        {
-                            from:this.tasks[0].start+".000",
-                            to:this.tasks[0].end+".000",
-                            text:"<v Roger Bingham>"+this.tasks[0].name
-                        }
-                    ]
-                    
-                    this.tasks.name = "";
-                    var dynamicSubtitle=`WEBVTT`
-                    
-                    data.map((item)=>{
-                        dynamicSubtitle=dynamicSubtitle+`\n ${item.from} --> ${item.to} \n ${item.text} \n`
-                    })
+                onPickFile () {
+  this.$refs.fileInput.click()
+},
+onFilePicked (event) {
+  const files = event.target.files
+  let filename = files[0].name
+  const fileReader = new FileReader()
+  fileReader.addEventListener('load', () => {
+    this.imageUrl = fileReader.result
+  })
+  fileReader.readAsDataURL(files[0])
+  this.image = files[0]
+},
+                new_cc: function() { 
+                    //자막 시간 숫자 확인
+                    let start1=document.getElementById("start1").value;
+                    let start2=document.getElementById("start2").value;
+                    let end1=document.getElementById("end1").value;
+                    let end2=document.getElementById("end2").value;
+                if(isNaN(start1)==true||isNaN(start2)==true||isNaN(end1)==true||isNaN(end2)==true){
+                        alert("자막 출력 시간은 숫자만 입력하세요!")
+                }
+                else if(start1+start2>end1+end2){
+                         alert("자막 시작시간과 끝나는 시간을 확인해 주세요!")
+                }
+                else if (!this.tasks.name && !this.tasks.start && !this.tasks.end) {
+                         return
+                }
+                else{
+                    //자동 배열 추가
+                    this.tasks.push ( {
+                        name: this.tasks.name,
+                        start1: this.tasks.start1,
+                        start2: this.tasks.start2,
+                        end1: this.tasks.end1,
+                        end2: this.tasks.end2,
+                        del: ''
+                    });
 
+                    //추가 후 입력창 값 비우기
+                    this.tasks.name = "";
+                    this.tasks.start1 = "";
+                    this.tasks.start2 = "";
+                    this.tasks.end1 = "";
+                    this.tasks.end2 = "";
+
+                    //data변수에 tasks 배열 이관
+                    var data=this.tasks
+                    var dynamicSubtitle=`WEBVTT`
+
+                    //배열 순차적으로 읽고 실시간 적용
+                    data.map((item)=>{
+                        dynamicSubtitle=dynamicSubtitle+`\n ${item.start1+":"+item.start2+".000"} --> ${item.end1+":"+item.end2+".000"} \n ${"<v Roger Bingham>" +item.name} \n`
+                    })
+                }
+                    //vtt파일로 다운
                     const trackBlob=new Blob ([dynamicSubtitle],{
                     type:"text/plain;charset=utf=8"
                     });
 
                     const trackUrl=URL.createObjectURL(trackBlob);
                     document.querySelector("#caption-track").src=trackUrl;
+                    document.querySelector("#save").href=trackUrl;
                     
                 },
-                new_cc: function() {
-                    if (!this.tasks.name && !this.tasks.start && !this.tasks.end) {
-                        return
-                    }
-
-                    this.tasks.push ( {
-                        name: this.tasks.name,
-                        start: this.tasks.start,
-                        end: this.tasks.end,
-                        del: ''
-                    });
-
-                    this.tasks.name = "";
-                    this.tasks.start = "";
-                    this.tasks.end = "";
-
-                },
-                //자막 삭제
+                    //자막 삭제
                 delItem: function (task) {
-                    this.tasks.splice(this.tasks.indexOf(task), 1)
+                        this.tasks.splice(this.tasks.indexOf(task), 1)
                 }
             }
         });
+        
 </script>
 </body>
 </html>
