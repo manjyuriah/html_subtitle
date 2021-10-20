@@ -42,24 +42,25 @@ ul {
 }
 
 .submit_cc {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   flex-shrink: 0;
   border: none;
   background: var(--add-button);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-plus'%3E%3Cline x1='12' y1='5' x2='12' y2='19'/%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3C/svg%3E");
-  background-size: 18px;
+  background-size: 16px;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 50%;
   cursor: pointer;
   position: absolute;
   right: 15px;
+  top: 30px;
   box-shadow: 0 0 12px 0 var(--add-button-shadow);
 }
 
 .input_cc {
-  width: 80px;
+  width: 400px;
   height: 35px;
   flex-shrink: 0;
   border: none;
@@ -74,12 +75,12 @@ ul {
 .add-task {
   height: 40px;
   font-size: 14px;
-  display: flex;
 }
 
 .cc_input {
   border-right: none;
   width: 65%;
+  height: 30px;
   padding: 0 4px;
   outline: none;
   border: none;
@@ -94,6 +95,7 @@ ul {
   color: #fff;
 }
 .top{
+  width: 200px;
   line-height: 50px;
 }
 /**/
@@ -126,7 +128,6 @@ ul {
   line-height: 24px;
   position: relative;
   transition: 0.2s;
-  cursor: pointer;
 }
 .time{
   width: 180px;
@@ -146,4 +147,15 @@ ul {
   position: absolute;
   right: 20px;
   cursor: pointer;
+}
+.save{
+  width: 150px;
+  height: 50px;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  line-height: 50px;
+  border-radius: 50px;
+  box-shadow: 5px 5px 10px #ccc;
+  margin: 0 auto;
+  margin-top:100px;
 }
