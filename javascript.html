@@ -7,6 +7,12 @@
     <title>only vue TEST</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="./select_time.css" type="text/css">
+    <style>
+        video::cue(c) {
+            color: peachpuff;
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
 </head>
 <body>
     <div id="root">
@@ -104,7 +110,7 @@
 
                     //배열 순차적으로 읽고 실시간 적용
                     data.map((item)=>{
-                        dynamicSubtitle=dynamicSubtitle+`\n ${item.start1+":"+item.start2+".000"} --> ${item.end1+":"+item.end2+".000"} \n ${"<v Roger Bingham>" +item.name} \n`
+                        dynamicSubtitle=dynamicSubtitle+`\n ${item.start1+":"+item.start2+".000"} --> ${item.end1+":"+item.end2+".000"} \n ${"<c>" +item.name+ "</c>"} \n`
                     })
                 }
                     //vtt파일로 다운
