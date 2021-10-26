@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TEST</title>
+    <title>test</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="./select_time.css" type="text/css">
+    <link rel="shortcut icon" href="#">
 </head>
 <body>
     <div id="root">
@@ -26,8 +27,9 @@
         </div>
         <!--추가된 내용-->
         <ul class="task-list">
-            <li class="task-list-item" v-for="task in tasks">
+            <li class="task-list-item" v-for="(task,index) in tasks">
               <label class="task-list-item-label">
+                {{index}}
                 <span class="cc_name">{{task.name}}</span>
                 <span class="time">
                     <div class="s_time">{{task.start1}}:{{task.start2}}</div>
@@ -39,74 +41,38 @@
             </li>
           </ul>
     </div>
-    <video controls style="width: 700px; height:400px;" id="video">
-        <source  type="video/mp4">
-        <track id="caption-track" kind="subtitles" srclang="ko" label="Korean" default /> 
+    <video id="video" controls style="width: 700px; height:400px;">
+        <source type="video/mp4" >
+        <track id="caption-track" kind="subtitles" srclang="ko" label="Korean" default />
     </video>
-    <button class="btn btn-info" @click="onPickFile">Upload profile picture</button>
-    <input  type="file"  style="display: none"  ref="fileInput"  accept="image/*"  @change="onFilePicked"/>
-    <div class="save">
-    <a id="save" href="" download="download.vtt">Download Copy</a>
-    </div>
+
+    <a id="save" href="" download="download.srt">download copy</a>
+    <input type="file" name="file" id="file" accept="video/mp4,video/mkv, video/x-m4v,video/*" @change="uploadVideo">
 
     </div>
 <script>
-    //비디오 업로드 및 출력
-    // function selectedVideo (self){
-    //     var file=self.files[0];
-    //     var reader=new FileReader();
-    //     reader.onload=function(e){
-    //       var src=e.target.result;
-    //       var video=document.getElementById("video");
-    //       video.setAttribute("video",src);
-    //       video.load();
-    //       video.play();
-    //     };
-    //     reader.readAsDataURL(file);
-    // }
-
-    // let imgElement = document.getElementById('video');
-    // let inputElement = document.getElementById('fileInput');
-
-    // inputElement.addEventListener('change', (e) => {
-    //     imgElement.src = URL.createObjectURL(e.target.files[0]);
-    // }, false);
-
-    // imgElement.onload = function () {
-    //     let mat = cv.imread(imgElement);
-    //     let gray = new cv.Mat();
-    //     cv.cvtColor(mat, gray, cv.COLOR_RGB2GRAY, 0);
-    //     cv.imshow('canvasOutput', gray);
-    //     mat.delete();
-    // };
-
         var app=new Vue({
             el:"#root",
             data:{
-                tasks: [
-                
-                ]
+                tasks: []
             },
             methods:{
-                onPickFile () {
-  this.$refs.fileInput.click()
-},
-onFilePicked (event) {
-  const files = event.target.files
-  let filename = files[0].name
-  const fileReader = new FileReader()
-  fileReader.addEventListener('load', () => {
-    this.imageUrl = fileReader.result
-  })
-  fileReader.readAsDataURL(files[0])
-  this.image = files[0]
-},
+                // 비디오 업로드
+                uploadVideo: function(){
+                    const inputFile = document.getElementById("file");
+                    const video = document.getElementById("video");
+                    const file = inputFile.files[0];
+                    const videourl = URL.createObjectURL(file);
+                    video.setAttribute("src", videourl);
+                    video.play();
+                },
                 new_cc: function() { 
                     //자막 시간 숫자 확인
                     let start1=document.getElementById("start1").value;
                     let start2=document.getElementById("start2").value;
                     let end1=document.getElementById("end1").value;
                     let end2=document.getElementById("end2").value;
+                    let index;
                 if(isNaN(start1)==true||isNaN(start2)==true||isNaN(end1)==true||isNaN(end2)==true){
                         alert("자막 출력 시간은 숫자만 입력하세요!")
                 }
@@ -124,9 +90,9 @@ onFilePicked (event) {
                         start2: this.tasks.start2,
                         end1: this.tasks.end1,
                         end2: this.tasks.end2,
-                        del: ''
+                        del: '',
                     });
-
+                    
                     //추가 후 입력창 값 비우기
                     this.tasks.name = "";
                     this.tasks.start1 = "";
@@ -136,15 +102,15 @@ onFilePicked (event) {
 
                     //data변수에 tasks 배열 이관
                     var data=this.tasks
-                    var dynamicSubtitle=`WEBVTT`
-
+                    var dynamicSubtitle;
                     //배열 순차적으로 읽고 실시간 적용
-                    data.map((item)=>{
-                        dynamicSubtitle=dynamicSubtitle+`\n ${item.start1+":"+item.start2+".000"} --> ${item.end1+":"+item.end2+".000"} \n ${"<v Roger Bingham>" +item.name} \n`
+                    data.map((item,index)=>{
+                       dynamicSubtitle= `${index+1}\n ${"00:"+item.start1+":"+item.start2+",000"} --> ${"00:"+item.end1+":"+item.end2+",000"} \n ${ item.name} \n\n`
+                       console.log(dynamicSubtitle)
                     })
                 }
-                    //vtt파일로 다운
-                    const trackBlob=new Blob ([dynamicSubtitle],{
+                    //srt파일로 다운
+                    const trackBlob=new Blob (["\ufeff"+dynamicSubtitle],{
                     type:"text/plain;charset=utf=8"
                     });
 

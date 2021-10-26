@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -18,7 +20,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "DM Sans", sans-serif;
+  /* font-family: "DM Sans", sans-serif; */
   overflow: hidden;
 }
 
@@ -30,7 +32,10 @@ ul {
   list-style: none;
   padding: 0;
 }
-
+.captionstyle{
+  font-family:'Nanum Myeongjo', serif;
+  color:red;
+}
 .input_box {
   position: relative;
   border-radius: 8px;

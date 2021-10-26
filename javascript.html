@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>only vue TEST</title>
+    <title>final file</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="./select_time.css" type="text/css">
+    <link rel="shortcut icon" href="#">
 </head>
 <body>
     <div id="root">
@@ -51,9 +52,7 @@
         var app=new Vue({
             el:"#root",
             data:{
-                tasks: [
-                
-                ]
+                tasks: []
             },
             methods:{
                 // 비디오 업로드
@@ -104,7 +103,7 @@
 
                     //배열 순차적으로 읽고 실시간 적용
                     data.map((item)=>{
-                        dynamicSubtitle=dynamicSubtitle+`\n ${item.start1+":"+item.start2+".000"} --> ${item.end1+":"+item.end2+".000"} \n ${"<v Roger Bingham>" +item.name} \n`
+                        dynamicSubtitle=dynamicSubtitle+`\n ${item.start1+":"+item.start2+".000"} --> ${item.end1+":"+item.end2+".000"} \n ${"<v Roger Bingham>" + item.name} \n`
                     })
                 }
                     //vtt파일로 다운
