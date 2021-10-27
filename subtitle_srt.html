@@ -102,28 +102,22 @@
 
                     //data변수에 tasks 배열 이관
                     var data=this.tasks
-                    var dynamicSubtitle;
+                    var dynamicSubtitle="";
                     //배열 순차적으로 읽고 실시간 적용
                     data.map((item,index)=>{
-                       dynamicSubtitle= `${index+1}\n ${"00:"+item.start1+":"+item.start2+",000"} --> ${"00:"+item.end1+":"+item.end2+",000"} \n ${ item.name} \n\n`
-                       
+                       dynamicSubtitle = dynamicSubtitle + `${index+1}\n ${"00:"+item.start1+":"+item.start2+",000"} --> ${"00:"+item.end1+":"+item.end2+",000"} \n ${ item.name} \n\n`
+                    })
+                }
                     //srt파일로 다운
                     const trackBlob=new Blob ([dynamicSubtitle],{
                     type:"text/plain;charset=utf-8"
                     });
-                    
-                    //콘솔로 배열 전체 잘 찍히는데 다운로드시 마지막 배열만 찍힘
-                    console.log(dynamicSubtitle)
 
                     const trackUrl=URL.createObjectURL(trackBlob);
                     //console.log(trackBlob)
 
                     document.querySelector("#caption-track").src=trackUrl;
                     document.querySelector("#save").href=trackUrl;
-
-                    })
-                }
-
                     
                 },
                     //자막 삭제
