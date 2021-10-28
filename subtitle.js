@@ -64,11 +64,8 @@ var app=new Vue({
             const trackBlob=new Blob ([dynamicSubtitle],{
             type:"text/plain;charset=utf=8"
             });
-
             const trackUrl=URL.createObjectURL(trackBlob);
             document.querySelector("#caption-track").src=trackUrl;
-            document.querySelector("#save").href=trackUrl;
-            
         },
         
         server:function(){//srt파일로 변환 및 저장
