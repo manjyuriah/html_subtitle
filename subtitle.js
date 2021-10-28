@@ -20,11 +20,18 @@ var app=new Vue({
             let start2=document.getElementById("start2").value;
             let end1=document.getElementById("end1").value;
             let end2=document.getElementById("end2").value;
-        if(isNaN(start1)==true||isNaN(start2)==true||isNaN(end1)==true||isNaN(end2)==true){
-                alert("자막 출력 시간은 숫자만 입력하세요!")
+        if(start1==""|| start2==""||end1==""||end2==""){//미입력시
+            alert("모든조건을 입력해주세요!")
+        }      
+        else if(isNaN(start1)==true||isNaN(start2)==true||isNaN(end1)==true||isNaN(end2)==true){//숫자만 입력
+            alert("자막 출력 시간은 숫자만 입력하세요!")
         }
-        else if(start1+start2>end1+end2){
+        else if(start1+start2>end1+end2 || start1>=60|| start2>=60||end1>=60||end2>=60){//시작시간 < 끝시간 조건
                  alert("자막 시작시간과 끝나는 시간을 확인해 주세요!")
+        }
+        else if(start1.length<2||start2.length<2||end1.length<2||end2.length<2){//숫자 입력 2자리로
+            console.log(start1.length,start2.length,end1.length,end2.length)
+            alert("자막 시간을 두자리로 입력하세요!")
         }
         else if (!this.tasks.name && !this.tasks.start && !this.tasks.end) {
                  return
@@ -74,9 +81,7 @@ var app=new Vue({
             const trackBlob=new Blob ([dynamicSubtitle],{
             type:"text/plain;charset=utf-8"
             });
-
             const trackUrl=URL.createObjectURL(trackBlob);
-
             document.querySelector("#caption-track").src=trackUrl;
             document.querySelector("#save").href=trackUrl;
         },
