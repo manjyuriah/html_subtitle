@@ -34,6 +34,7 @@ dragArea.addEventListener('drop',(event)=>{
     event.preventDefault();
     file=event.dataTransfer.files[0];
     displayFile();
+
 });
 
 function displayFile(){
@@ -53,6 +54,7 @@ function displayFile(){
             let fileURL=fileReader.result;
         };
         fileReader.readAsDataURL(file);
+        video.style.display = 'block';
     }
     else{
         alert("파일 확장자를 확인하세요!")
