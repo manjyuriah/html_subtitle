@@ -1,0 +1,219 @@
+@import url("https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --checkbox-color: #ee9ca7;
+  --checkbox-shadow: rgba(238, 156, 167, 0.2);
+  --add-button: #ee9ca7;
+  --add-button-shadow: rgba(238, 156, 167,0.4);
+}
+
+body {
+  width: 100%;
+  margin: 0;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* font-family: "DM Sans", sans-serif; */
+}
+
+input {
+  outline: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+/*영상 드래그 앤 드롭*/
+.drag_area{
+  height: 515px;
+  width: 720px;
+  border: 1px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 10px auto;
+}
+.drag_area_sub{
+  height:100px;
+  width: 720px;
+  border: 1px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 10px auto;
+}
+h3{
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+.drag_area .header,.drag_area_sub .header_sub{
+  font-size: 20px;
+  font-weight: 500;
+  color:#aaa;
+}
+.drag_area .support,.drag_area_sub .support{
+  font-size: 12px;
+  color: gray;
+  margin: 10px 0 15px 0;
+}
+.drag_area .button,.drag_area_sub .button_sub{
+  font-size: 20px;
+  font-weight: 500;
+  color: #1683ff;
+  cursor: pointer;
+}
+.drag_area.active,.drag_area_sub.active{
+  border: 2px solid #1683ff;
+}
+
+
+.captionstyle{
+  font-family:'Nanum Myeongjo', serif;
+  color:red;
+}
+.input_box {
+  position: relative;
+  bottom: 0;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 770px;
+  max-height: 100%;
+  background-color: #242424;
+  padding: 24px;
+}
+
+.submit_cc {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border: none;
+  background: var(--add-button);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-plus'%3E%3Cline x1='12' y1='5' x2='12' y2='19'/%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3C/svg%3E");
+  background-size: 16px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  cursor: pointer;
+  /* position: absolute;
+  right: 15px;
+  top: 30px; */
+  box-shadow: 0 0 12px 0 var(--add-button-shadow);
+}
+
+.input_cc {
+  width: 400px;
+  height: 35px;
+  flex-shrink: 0;
+  border: none;
+  background: var(--add-button);
+  color: #fff;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 12px 0 var(--add-button-shadow);
+}
+
+.add-task {
+  height: 40px;
+  font-size: 14px;
+}
+
+.cc_input {
+  border-right: none;
+  width: 65%;
+  height: 30px;
+  padding: 0 4px;
+  outline: none;
+  border: none;
+  color: #fff;
+  border-bottom: 1px solid #fff;
+  background-color: transparent;
+  margin-right: 12px;
+  box-shadow: none;
+  border-radius: 0;
+}
+.cc_input:placeholder {
+  color: #fff;
+}
+.top{
+  width: 200px;
+  line-height: 50px;
+}
+
+.cc_name {
+  width: 430px;
+}
+.s_time,.e_time{
+  width: 55px;
+  height: 20px;
+  background-color: rgb(216, 216, 216);
+  color: #242424;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 20px;
+}
+.task-list-item {
+  border-radius: 4px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+.task-list-item-label {
+  display: flex;
+  align-items: flex-start;
+  color: #fff;
+  margin-right: 8px;
+  font-size: 14px;
+  line-height: 24px;
+  position: relative;
+  transition: 0.2s;
+}
+.time{
+  width: 180px;
+}
+.time>div{
+  display: inline-block;
+}
+.delete-btn {
+  margin-left: auto;
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ff3d46' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-trash-2'%3E%3Cpolyline points='3 6 5 6 21 6'/%3E%3Cpath d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/%3E%3Cline x1='10' y1='11' x2='10' y2='17'/%3E%3Cline x1='14' y1='11' x2='14' y2='17'/%3E%3C/svg%3E");
+  background-size: 16px;
+  background-position: center;
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+}
+.save{
+  width: 150px;
+  height: 50px;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  line-height: 50px;
+  border-radius: 50px;
+  box-shadow: 5px 5px 10px #ccc;
+  margin: 0 auto;
+  margin-top:100px;
+}
+textarea{
+  min-height: 5rem;
+  overflow-y: hidden;
+  resize: none;
+  padding: 1em;
+  padding-bottom: 0.2em;
+}
