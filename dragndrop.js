@@ -42,9 +42,10 @@ function displayFile(){
     let validExtensions=['video/webm','video/mp4','video/mkv','video/*','video/x-m4v']
     if(validExtensions.includes(fileType)){//파일이 드래그 드롭 됐을때
 
+
         const inputFile = document.getElementById("file");
         const video = document.getElementById("video");
-        //const file = inputFile.files[0];
+
         const videourl = URL.createObjectURL(file);
         video.setAttribute("src", videourl);
         video.play();
@@ -54,7 +55,11 @@ function displayFile(){
             let fileURL=fileReader.result;
         };
         fileReader.readAsDataURL(file);
+<<<<<<< HEAD
         video.style.display = 'block';
+=======
+        video.style.display = "block";
+>>>>>>> 726ee475c79f7250f89363a5fc0f61f462c6ffcf
     }
     else{
         alert("파일 확장자를 확인하세요!")
