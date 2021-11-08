@@ -44,11 +44,11 @@
             background-size: cover;
             cursor: pointer;
         }
-        ::cue {
-            color: #ffdab9;
-            font-family: 'Mochiy Pop P One', sans-serif;
-            background-color: transparent;
-        }
+        /* video.track::cue {
+            /* color: #ffdab9;
+            font-family: 'Mochiy Pop P One', sans-serif; */
+            /* background-color: transparent;
+        } */ 
     
     </style>
 </head>
@@ -137,9 +137,11 @@
     <!-- drag and drop part -->
     <script src="dragndrop_sub.js"></script>
     <script>
+        function selectFontColor() {
+            document.styleSheets[0].addRule('video::cue', 'color: #ffdab9;background-color: transparent;');
+        }
         function selectFont() {
-            var track = document.getElementById('video')
-            console.log(track)
+            document.styleSheets[0].addRule('video::cue', 'font-family: "Mochiy Pop P One", sans-serif;');
         }
     </script>
     </body>
