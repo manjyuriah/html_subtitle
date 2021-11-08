@@ -1,7 +1,7 @@
 var app=new Vue({
     el:"#root",
     data:{
-        tasks: []
+        tasks:""
     },
     methods:{
         // 비디오 업로드
@@ -20,8 +20,8 @@ var app=new Vue({
             const srturl = URL.createObjectURL(file);
             srt.setAttribute("src", srturl);
         },
-        /*new_cc: function() { 
-            //자막 시간 숫자 확인
+        new_cc: function() { 
+        /*자막 시간 숫자 확인
             let start1=document.getElementById("start1").value;
             let start2=document.getElementById("start2").value;
             let end1=document.getElementById("end1").value;
@@ -52,20 +52,20 @@ var app=new Vue({
                 end2: this.tasks.end2,
                 del: ''
             });
-
+            
             //추가 후 입력창 값 비우기
             this.tasks.name = "";this.tasks.start1 = "";this.tasks.start2 = "";
             this.tasks.end1 = "";this.tasks.end2 = "";
-
+            */
             //data변수에 tasks 배열 이관
             var data=this.tasks
             var dynamicSubtitle=`WEBVTT`
 
-            //배열 순차적으로 읽고 실시간 적용
+            /*배열 순차적으로 읽고 실시간 적용
             data.map((item)=>{
                 dynamicSubtitle=dynamicSubtitle+`\n ${item.start1+":"+item.start2+".000"} --> ${item.end1+":"+item.end2+".000"} \n ${"<v Roger Bingham>" + item.name} \n`
-            })
-        }
+            })*/
+        
             //vtt파일로 다운
             const trackBlob=new Blob ([dynamicSubtitle],{
             type:"text/plain;charset=utf=8"
@@ -73,7 +73,7 @@ var app=new Vue({
             const trackUrl=URL.createObjectURL(trackBlob);
             document.querySelector("#caption-track").src=trackUrl;
         },
-        delItem: function (task) {//자막 삭제
+        /*delItem: function (task) {//자막 삭제
                 this.tasks.splice(this.tasks.indexOf(task), 1)
         }*/
         server:function(){//srt파일로 변환 및 저장
@@ -92,22 +92,75 @@ var app=new Vue({
         }
     }
 });
-// function uploadSrt() {
-//     var input = document.createElement("input");
-//     input.type = "file";
-//     input.accept = "text/plain,.srt,.txt"; 
-//     input.onchange = function (event) {
-//         processFile(event.target.files[0]);
+//vtt변환후 미리보기 출력
+function convert() {
+    var input = document.getElementById("output");
+    var output;
+    var srt = input.value;
+    var webvtt = srt2webvtt(srt);
+  }
+  function srt2webvtt(data) {
+    // remove dos newlines
+    var srt = data.replace(/\r+/g, '');
+    srt = srt.replace(/^\s+|\s+$/g, '');
+    var cuelist = srt.split('\n\n');
+    var result = "";
 
-//     };
-//     //input.click();
-// }
-// function processFile(file) {
-//     var reader = new FileReader();
-//     dargText_sub.textContent=file.name
-//     reader.onload = function () {
-//         output.innerText = reader.result;
-//     };
-//     reader.readAsText(file,"euc-kr");
-    
-// }
+    if (cuelist.length > 0) {
+      result += "WEBVTT\n\n";
+      for (var i = 0; i < cuelist.length; i=i+1) {
+        result += convertSrtCue(cuelist[i]);
+      }
+    }
+    return result;
+  }
+  function convertSrtCue(caption) {
+    //srt = srt.replace(/<[a-zA-Z\/][^>]*>/g, '');
+    var cue = "";
+    var s = caption.split(/\n/);
+    while (s.length > 3) {
+        for (var i = 3; i < s.length; i++) {
+            s[2] += "\n" + s[i]
+        }
+        s.splice(3, s.length - 3);
+    }
+    var line = 0;
+    // detect identifier
+    if (!s[0].match(/\d+:\d+:\d+/) && s[1].match(/\d+:\d+:\d+/)) {
+      cue += s[0].match(/\w+/) + "\n";
+      line += 1;
+      console.log(caption)
+      console.log(cue)
+    //   let vtt=erase(caption,cue)
+    //   console.log(vtt)
+    }
+
+    // get time strings
+    if (s[line].match(/\d+:\d+:\d+/)) {
+      // convert time string
+      var m = s[1].match(/(\d+):(\d+):(\d+)(?:,(\d+))?\s*--?>\s*(\d+):(\d+):(\d+)(?:,(\d+))?/);
+      if (m) {
+        cue += m[1]+":"+m[2]+":"+m[3]+"."+m[4]+" --> "
+              +m[5]+":"+m[6]+":"+m[7]+"."+m[8]+"\n";
+        line += 1;
+        
+        var dynamicSubtitle=`WEBVTT`
+        const trackBlob=new Blob ([dynamicSubtitle],{
+        type:"text/plain;charset=utf=8"
+        });
+        const trackUrl=URL.createObjectURL(trackBlob);
+        document.querySelector("#caption-track").src=trackUrl;
+        
+      } 
+      else {// Unrecognized timestring
+        return "";}
+    } 
+    else {// file format error or comment lines
+      return "";}
+
+    // get cue text
+    if (s[line]) {
+      cue += s[line] + "\n\n";
+    }
+    return cue;
+  }
