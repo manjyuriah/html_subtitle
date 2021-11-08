@@ -20,7 +20,7 @@ var app=new Vue({
             const srturl = URL.createObjectURL(file);
             srt.setAttribute("src", srturl);
         },
-        new_cc: function() { 
+        // new_cc: function() { 
         /*자막 시간 숫자 확인
             let start1=document.getElementById("start1").value;
             let start2=document.getElementById("start2").value;
@@ -58,21 +58,21 @@ var app=new Vue({
             this.tasks.end1 = "";this.tasks.end2 = "";
             */
             //data변수에 tasks 배열 이관
-            var data=this.tasks
-            var dynamicSubtitle=`WEBVTT`
+            // var data=this.tasks
+            // var dynamicSubtitle=`WEBVTT`
 
             /*배열 순차적으로 읽고 실시간 적용
             data.map((item)=>{
                 dynamicSubtitle=dynamicSubtitle+`\n ${item.start1+":"+item.start2+".000"} --> ${item.end1+":"+item.end2+".000"} \n ${"<v Roger Bingham>" + item.name} \n`
             })*/
         
-            //vtt파일로 다운
-            const trackBlob=new Blob ([dynamicSubtitle],{
-            type:"text/plain;charset=utf=8"
-            });
-            const trackUrl=URL.createObjectURL(trackBlob);
-            document.querySelector("#caption-track").src=trackUrl;
-        },
+        //     //vtt파일로 다운
+        //     const trackBlob=new Blob ([dynamicSubtitle],{
+        //     type:"text/plain;charset=utf=8"
+        //     });
+        //     const trackUrl=URL.createObjectURL(trackBlob);
+        //     document.querySelector("#caption-track").src=trackUrl;
+        // },
         /*delItem: function (task) {//자막 삭제
                 this.tasks.splice(this.tasks.indexOf(task), 1)
         }*/
@@ -110,6 +110,15 @@ function convert() {
       result += "WEBVTT\n\n";
       for (var i = 0; i < cuelist.length; i=i+1) {
         result += convertSrtCue(cuelist[i]);
+
+         //vtt파일로 다운
+         var dynamicSubtitle= result
+         const trackBlob=new Blob ([dynamicSubtitle],{
+            type:"text/plain;charset=utf=8"
+            });
+            console.log(dynamicSubtitle)
+            const trackUrl=URL.createObjectURL(trackBlob);
+            document.querySelector("#caption-track").src=trackUrl;
       }
     }
     return result;
@@ -124,13 +133,18 @@ function convert() {
         }
         s.splice(3, s.length - 3);
     }
+    console.log(s)
     var line = 0;
+    
+    // 숫자 제거
+    s[0] = s[0].replace(/[0-9]/g,"");
+    console.log(s[0])
     // detect identifier
     if (!s[0].match(/\d+:\d+:\d+/) && s[1].match(/\d+:\d+:\d+/)) {
-      cue += s[0].match(/\w+/) + "\n";
+      cue += "";
       line += 1;
-      console.log(caption)
-      console.log(cue)
+    //   console.log(caption)
+    //   console.log(cue)
     //   let vtt=erase(caption,cue)
     //   console.log(vtt)
     }
@@ -144,12 +158,12 @@ function convert() {
               +m[5]+":"+m[6]+":"+m[7]+"."+m[8]+"\n";
         line += 1;
         
-        var dynamicSubtitle=`WEBVTT`
-        const trackBlob=new Blob ([dynamicSubtitle],{
-        type:"text/plain;charset=utf=8"
-        });
-        const trackUrl=URL.createObjectURL(trackBlob);
-        document.querySelector("#caption-track").src=trackUrl;
+        // var dynamicSubtitle=`WEBVTT`
+        // const trackBlob=new Blob ([dynamicSubtitle],{
+        // type:"text/plain;charset=utf=8"
+        // });
+        // const trackUrl=URL.createObjectURL(trackBlob);
+        // document.querySelector("#caption-track").src=trackUrl;
         
       } 
       else {// Unrecognized timestring
