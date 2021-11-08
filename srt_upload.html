@@ -8,6 +8,49 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="./srt_upload.css" type="text/css">
     <link rel="shortcut icon" href="#">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap');
+        .font-box {
+            width: 720px;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 40px;
+        }
+        .font-box ul {
+            display: flex;
+            justify-content: center;
+        }
+        .font-box ul li {
+            margin: 0 30px;
+        }
+        .font-box ul li span {
+            text-align: center;
+            display: block;
+            padding-top: 20px;
+        }
+        .font-box ul li:first-child a {
+            width: 120px;
+            height: 150px;
+            display: block;
+            background: url('./mochipop.png') center center no-repeat;
+            background-size: cover;
+            cursor: pointer;
+        }
+        .font-box ul li:nth-child(2) a {
+            width: 150px;
+            height: 150px;
+            display: block;
+            background: url('./mochiypop_color.png') center center no-repeat;
+            background-size: cover;
+            cursor: pointer;
+        }
+        ::cue {
+            color: #ffdab9;
+            font-family: 'Mochiy Pop P One', sans-serif;
+            background-color: transparent;
+        }
+    
+    </style>
 </head>
 <body>
     <div id="root">
@@ -51,6 +94,24 @@
         <span class="header">or <span class="button"> 브라우저에서 선택</span></span>
         <input type="file" name="file" id="file" accept="video/mp4,video/mkv,video/x-m4v,video/*" hidden @change="uploadVideo">
         </div>
+
+        <!-- 폰트 선택 -->
+        <div>
+            <h3>자막 폰트를 선택 해주세요</h3>
+            <div class="font-box">
+                <ul>
+                    <li>
+                        <a onclick="selectFont()"></a>
+                        <span>Mochiy Pop P One</span>
+
+                    </li>
+                    <li>
+                        <a onclick="selectFontColor()"></a>
+                        <span>#ffdab9</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
     
         <h3>자막을 업로드 해주세요</h3><div onclick="convert()">자막 미리보기</div>
         <div class="drag_area_sub">
@@ -75,5 +136,11 @@
     <script src="subtitle_sub.js"></script>
     <!-- drag and drop part -->
     <script src="dragndrop_sub.js"></script>
+    <script>
+        function selectFont() {
+            var track = document.getElementById('video')
+            console.log(track)
+        }
+    </script>
     </body>
     </html>
