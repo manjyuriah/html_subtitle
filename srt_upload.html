@@ -10,6 +10,10 @@
     <link rel="shortcut icon" href="#">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap');
+        @font-face {
+            font-family: 'chassam';
+            src: url('KCCChassam.ttf') format('truetype');
+        }
         .font-box {
             width: 720px;
             height: 300px;
@@ -29,18 +33,34 @@
             padding-top: 20px;
         }
         .font-box ul li:first-child a {
-            width: 120px;
-            height: 150px;
+            width: 100px;
+            height: 130px;
             display: block;
             background: url('./mochipop.png') center center no-repeat;
             background-size: cover;
             cursor: pointer;
         }
         .font-box ul li:nth-child(2) a {
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             display: block;
             background: url('./mochiypop_color.png') center center no-repeat;
+            background-size: cover;
+            cursor: pointer;
+        }
+        .font-box ul li:nth-child(3) a {
+            width: 100px;
+            height: 130px;
+            display: block;
+            background: url('./KCCchassam.png') center center no-repeat;
+            background-size: cover;
+            cursor: pointer;
+        }
+        .font-box ul li:nth-child(4) a {
+            width: 120px;
+            height: 120px;
+            display: block;
+            background: url('./mint_color.png') center center no-repeat;
             background-size: cover;
             cursor: pointer;
         }
@@ -98,16 +118,25 @@
         <!-- 폰트 선택 -->
         <div>
             <h3>자막 폰트를 선택 해주세요</h3>
-            <div class="font-box">
+            <div class="font-box font1">
                 <ul>
                     <li>
-                        <a onclick="selectFont()"></a>
+                        <a onclick="selectMochiy()"></a>
                         <span>Mochiy Pop P One</span>
 
                     </li>
                     <li>
-                        <a onclick="selectFontColor()"></a>
+                        <a onclick="selectFfbda9()"></a>
                         <span>#ffdab9</span>
+                    </li>
+                    <li>
+                        <a onclick="selectChassam()"></a>
+                        <span>KCC차쌤체</span>
+
+                    </li>
+                    <li>
+                        <a onclick="select43c2ba()"></a>
+                        <span>#43c1ba</span>
                     </li>
                 </ul>
             </div>
@@ -137,11 +166,17 @@
     <!-- drag and drop part -->
     <script src="dragndrop_sub.js"></script>
     <script>
-        function selectFontColor() {
+        function selectFfbda9() {
             document.styleSheets[0].addRule('video::cue', 'color: #ffdab9;background-color: transparent;');
         }
-        function selectFont() {
+        function selectMochiy() {
             document.styleSheets[0].addRule('video::cue', 'font-family: "Mochiy Pop P One", sans-serif;');
+        }
+        function select43c2ba() {
+            document.styleSheets[0].addRule('video::cue', 'color: #43c2ba;background-color: transparent;');
+        }
+        function selectChassam() {
+            document.styleSheets[0].addRule('video::cue', 'font-family: "chassam", sans-serif;');
         }
     </script>
     </body>
