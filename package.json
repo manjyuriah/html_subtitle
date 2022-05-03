@@ -1,0 +1,24 @@
+{
+  "name": "html_subtitle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start":"node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manjyuriah/html_subtitle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/manjyuriah/html_subtitle/issues"
+  },
+  "homepage": "https://github.com/manjyuriah/html_subtitle#readme"
+}

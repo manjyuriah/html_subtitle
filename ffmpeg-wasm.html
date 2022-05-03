@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vtt file(final)</title>
+    <link rel="stylesheet" href="./select_time.css" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        // if(!crossOriginIsolated) SharedArrayBuffer=ArrayBuffer;
+    </script>
+    <link rel="shortcut icon" href="#">
+</head>
+<body>
+    <div id="root">
+    <h3>영상을 업로드 해주세요</h3>
+    <div class="input_box" id="input_box" >
+    <div class="drag_area">
+    <video id="video" controls class="drop" width="720" height="405" style="display: none;">
+        <source type="video/mp4" >
+        <track id="caption-track" kind="subtitles" srclang="ko" label="Korean" default />
+    </video>
+    <span class="header">드래그로 파일을 끌어 업로드 하세요</span>
+    <span class="header">or <span class="button"> 브라우저에서 선택</span></span>
+    <!-- <input type="file" name="file" id="file" accept="video/mp4,video/mkv,video/x-m4v,video/*" hidden @change="uploadVideo"> -->
+        <img id="picture" src="" alt="picture"/>
+        <input type="file" id="uploader"/>
+    </div>
+    </div>
+    </div>
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.9.4/dist/ffmpeg.min.js"></script>
+    
+<script>
+    /*
+    const { createFFmpeg, fetchFile } = FFmpeg;
+    // (1) Create ffmpeg object
+    const ffmpeg = createFFmpeg({ log: true });
+    (async () => {
+    await ffmpeg.load();
+    console.log("ready");
+     })();
+    const transcode = async ({ target: { files } }) => {
+      const { name } = files[0];
+      console.log(name)
+      // (2) Load ffmpeg module
+      await ffmpeg.load();
+      // (3) Write file to ffmpeg.FS (FileSystem?)
+      ffmpeg.FS('writeFile', name, await fetchFile(files[0]));
+      // (4) Execute ffmpeg
+      await ffmpeg.run('-i', name,  'output.mp4');
+      // (5) Read converted file
+      const data = ffmpeg.FS('readFile', 'output.mp4');
+
+        const video = document.getElementById('player');
+        video.src = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
+      }
+      document.getElementById('file').addEventListener('change', transcode);
+
+var app=new Vue({
+    el:"#root",
+    data:{
+        tasks: []
+    },
+    methods:{
+        // 비디오 업로드
+        uploadVideo: function(){
+            const inputFile = document.getElementById("file");
+            const video = document.getElementById("video");
+            const file = inputFile.files[0];
+            const videourl = URL.createObjectURL(file);
+            video.setAttribute("src", videourl);
+            video.play();
+        },
+    }
+});
+let button=document.querySelector('.button');
+let input =document.getElementById("file");
+let file;
+
+button.onclick=()=>{
+    input.click();
+};
+//브라우저에서 선택
+input.addEventListener('change',function(){
+    file=this.files[0];
+    displayFile();
+})
+function displayFile(){
+    let fileType=file.type;
+    let validExtensions=['video/webm','video/mp4','video/mkv','video/*','video/x-m4v']
+    if(validExtensions.includes(fileType)){//파일이 드래그 드롭 됐을때
+
+
+        const inputFile = document.getElementById("file");
+        const video = document.getElementById("video");
+
+        const videourl = URL.createObjectURL(file);
+        video.setAttribute("src", videourl);
+        video.play();
+
+        let fileReader=new FileReader();
+        fileReader.onload=()=>{
+            let fileURL=fileReader.result;
+        };
+        fileReader.readAsDataURL(file);
+
+        video.style.display = 'block';
+    }
+}*/
+const { createFFmpeg, fetchFile } = FFmpeg;
+            const ffmpeg = createFFmpeg({ log: true });
+           
+            const transcode = async ({target: {files}}) => {
+                const { name } = files[0];
+                await ffmpeg.load();
+
+               ffmpeg.FS('writeFile', name, await fetchFile(files[0]));
+                const output = 'output.png';
+                await ffmpeg.run('-i', name, '-vf', 'hue=s=0', output);
+                const data = ffmpeg.FS('readFile', output);
+
+                const container = document.getElementById('picture');
+                console.log(data)
+                 const blob=new Blob([data.buffer]);
+                console.log("data",blob.toString())
+                container.src="data:image/png;base64", +blob.toString();
+                const reader = new FileReader();
+                reader.readAsDataURL(new Blob([data.buffer]));
+                reader.onloadend = function() {
+                    console.log("data", reader.result);
+                    container.src = reader.result;
+                }/**/
+            }
+            document.getElementById('uploader').addEventListener('change', transcode);
+</script>
+</body>
+</html>

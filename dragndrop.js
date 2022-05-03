@@ -55,11 +55,8 @@ function displayFile(){
             let fileURL=fileReader.result;
         };
         fileReader.readAsDataURL(file);
-<<<<<<< HEAD
+
         video.style.display = 'block';
-=======
-        video.style.display = "block";
->>>>>>> 726ee475c79f7250f89363a5fc0f61f462c6ffcf
     }
     else{
         alert("파일 확장자를 확인하세요!")
